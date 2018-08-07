@@ -1,15 +1,17 @@
 package com.harium.etyl;
 
 import android.os.Bundle;
-
 import com.harium.etyl.ad.AdHandler;
 import com.harium.etyl.ad.DummyAdProvider;
-import com.harium.etyl.android.AndroidCore;
+import com.harium.etyl.android.AndroidEngine;
 import com.harium.etyl.commons.context.Application;
 import com.harium.etyl.core.Engine;
-import com.harium.etyl.util.PathHelper;
+import com.harium.etyl.core.GDXCore;
+import com.harium.etyl.loader.FontLoader;
+import com.harium.etyl.loader.MultimediaLoader;
+import com.harium.etyl.loader.image.ImageLoader;
 
-public abstract class EtylMobile extends AndroidEngine implements Engine<Application> {
+public abstract class EtylMobile extends AndroidEngine<GDXCore> implements Engine<Application> {
 
     public static final String ANDROID_ACTIVITY = "ANDROID_ACTIVITY";
 
@@ -17,23 +19,37 @@ public abstract class EtylMobile extends AndroidEngine implements Engine<Applica
 
     public EtylMobile(int w, int h) {
         super(w, h);
+        addLoader(ImageLoader.getInstance());
+        addLoader(FontLoader.getInstance());
+        addLoader(MultimediaLoader.getInstance());
     }
 
     @Override
-    protected void onCreate (Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PathHelper.assetManager = getAssets();
 
-        initialize(core);
+        // Init Ad Provider
+        AdHandler.getInstance().setProvider(new DummyAdProvider());
 
-        application = startApplication();
-        core.setApplication(application);
+        init();
     }
 
-    public AndroidCore initCore() {
-        //Init Ad Provider
-        AdHandler.getInstance().setProvider(new DummyAdProvider());
-        return new AndroidCore(w, h);
+    /**
+     * Based on Etyl.init() in etyl-gdx
+     */
+    public void init() {
+        initialSetup();
+
+        application = startApplication();
+        application.setLoaded(false);
+        core.setApplication(application);
+
+        // Init Loaders
+        super.init();
+    }
+
+    public GDXCore initCore() {
+        return new GDXCore(w, h);
     }
 
 }
