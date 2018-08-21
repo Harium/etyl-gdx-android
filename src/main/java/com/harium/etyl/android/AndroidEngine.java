@@ -2,8 +2,9 @@ package com.harium.etyl.android;
 
 import android.content.pm.PackageManager;
 import android.os.Build;
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.android.AndroidApplication;
-import com.harium.etyl.EtylMobile;
+import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.harium.etyl.core.GDXCore;
 import com.harium.etyl.loader.Loader;
 import com.harium.etyl.util.PathHelper;
@@ -14,9 +15,11 @@ import java.util.List;
 /**
  * Based on etyl-gdx-lwjgl BaseEngine
  *
- * @param <T>
+ * @param <T> Core class that extends GDXCore
  */
 public abstract class AndroidEngine<T extends GDXCore> extends AndroidApplication {
+
+    public static final String ANDROID_ACTIVITY = "ANDROID_ACTIVITY";
 
     protected int w;
     protected int h;
@@ -33,7 +36,7 @@ public abstract class AndroidEngine<T extends GDXCore> extends AndroidApplicatio
         loaders = new ArrayList<>();
 
         core = initCore();
-        core.getSession().put(EtylMobile.ANDROID_ACTIVITY, this);
+        core.getSession().put(ANDROID_ACTIVITY, this);
     }
 
     public void init() {
@@ -73,6 +76,16 @@ public abstract class AndroidEngine<T extends GDXCore> extends AndroidApplicatio
 
     protected boolean needPermission() {
         return Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1;
+    }
+
+    @Override
+    public void initialize(ApplicationListener listener) {
+        AndroidApplicationConfiguration config = buildConfiguration();
+        this.initialize(listener, config);
+    }
+
+    protected AndroidApplicationConfiguration buildConfiguration() {
+        return new AndroidApplicationConfiguration();
     }
 
 }

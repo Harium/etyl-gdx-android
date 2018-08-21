@@ -13,8 +13,6 @@ import com.harium.etyl.loader.image.ImageLoader;
 
 public abstract class EtylMobile extends AndroidEngine<GDXCore> implements Engine<Application> {
 
-    public static final String ANDROID_ACTIVITY = "ANDROID_ACTIVITY";
-
     private Application application;
 
     public EtylMobile(int w, int h) {
