@@ -63,21 +63,6 @@ public abstract class AndroidEngine<T extends GDXCore> extends AndroidApplicatio
 
     protected abstract T initCore();
 
-    // Util permission methods
-    protected boolean hasPermission(String... permissions) {
-        if (needPermission()) {
-            for (String permission : permissions) {
-                return checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
-            }
-        }
-
-        return true;
-    }
-
-    protected boolean needPermission() {
-        return Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1;
-    }
-
     @Override
     public void initialize(ApplicationListener listener) {
         AndroidApplicationConfiguration config = buildConfiguration();
