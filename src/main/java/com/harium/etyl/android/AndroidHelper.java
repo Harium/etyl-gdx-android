@@ -14,7 +14,7 @@ public class AndroidHelper {
     }
 
     // Permission methods
-    protected boolean hasPermission(Context context, String... permissions) {
+    public static boolean hasPermission(Context context, String... permissions) {
         Activity activity = activity(context);
 
         if (needPermission()) {
@@ -26,7 +26,7 @@ public class AndroidHelper {
         return true;
     }
 
-    protected boolean needPermission() {
+    public static boolean needPermission() {
         return Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1;
     }
 }
