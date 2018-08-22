@@ -14,9 +14,7 @@ public class AndroidHelper {
     }
 
     // Permission methods
-    public static boolean hasPermission(Context context, String... permissions) {
-        Activity activity = activity(context);
-
+    public static boolean hasPermission(Activity activity, String... permissions) {
         if (needPermission()) {
             for (String permission : permissions) {
                 return activity.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
@@ -24,6 +22,11 @@ public class AndroidHelper {
         }
 
         return true;
+    }
+
+    public static boolean hasPermission(Context context, String... permissions) {
+        Activity activity = activity(context);
+        return hasPermission(activity, permissions);
     }
 
     public static boolean needPermission() {
