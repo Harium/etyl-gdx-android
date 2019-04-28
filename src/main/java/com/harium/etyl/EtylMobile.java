@@ -50,4 +50,8 @@ public abstract class EtylMobile extends AndroidEngine<GDXCore> implements Engin
         return new GDXCore(w, h);
     }
 
+    public void setTitle(String title) {
+        // Do nothing
+    }
+
 }
