@@ -1,7 +1,5 @@
 package com.harium.etyl.android;
 
-import android.content.pm.PackageManager;
-import android.os.Build;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
